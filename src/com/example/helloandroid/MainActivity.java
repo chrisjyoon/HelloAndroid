@@ -14,7 +14,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,16 +28,13 @@ import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
 	public static final String DEBUG_TAG = "HelloExample";
-	EditText editText = null;
-	TextView textView = null;
+
 	SimpleAdapter mAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-                "Linux", "OS/2" };
+        String[] values = new String[] { "1. ActionBar", "2. Facebook Login" };
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
             setListAdapter(adapter);
@@ -49,23 +46,23 @@ public class MainActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
     	Log.d(DEBUG_TAG, "touch menu = " + position);
 		String item = (String)getListAdapter().getItem(position);
+		Intent intent = null;
+		switch (position) {
+		case 0: // 1. ActionBar Activity
+			intent = new Intent(this, ActionBarDemo.class);
+			startActivity(intent);
+			break;
+		case 1: // 2. Facebook Login Activity
+			intent = new Intent(this, FacebookLoginDemo.class);
+			startActivity(intent);
+			break;
+		}
 		super.onListItemClick(l, v, position, id);
 	}
 
 
 
-	public void myClickHandler(View view) {
-    	String stringUrl = editText.getText().toString();
-    	ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-    	NetworkInfo ni = cm.getActiveNetworkInfo();
-    	
-    	if (ni != null && ni.isConnected()) {
-    		textView.setText("Start downloading..");
-    		new DownloadTask().execute(stringUrl);
-    	} else {
-    		textView.setText("No network connection available");
-    	}
-    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,52 +83,5 @@ public class MainActivity extends ListActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private class DownloadTask extends AsyncTask<String, Void, String> {
-
-		@Override
-		protected String doInBackground(String... arg0) {
-			try {
-				return downloadURL(arg0[0]);
-			} catch (IOException e) {
-				return "Unable to connect web page. Check the url again";
-			}
-		}
-
-		@Override
-		protected void onPostExecute(String result) {
-			textView.setText(result);
-		}
-    }
-    
-    private String downloadURL(String myUrl) throws IOException {
-    	InputStream is = null;
-    	int len = 1500;
-    	
-    	try {
-    		URL url = new URL(myUrl);
-    		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-    		conn.setReadTimeout(10000);
-    		conn.setConnectTimeout(10000);
-    		conn.setRequestMethod("GET");
-    		conn.setDoInput(true);
-    		conn.connect();
-    		int response = conn.getResponseCode();
-    		Log.d(DEBUG_TAG, "response code : " + response);
-    		is = conn.getInputStream();
-    		
-    		String contentAsString = readIt(is, len);
-    		return contentAsString;
-    	} finally {
-    		if (is != null)
-    			is.close();
-    	}
-    }
-    
-    public String readIt(InputStream is, int len) throws IOException, UnsupportedEncodingException {
-    	Reader reader = null;
-    	reader = new InputStreamReader(is, "UTF-8");
-    	char[] buf = new char[len];
-    	reader.read(buf);
-    	return new String(buf);
-    }
+	
 }

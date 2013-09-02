@@ -6,4 +6,5 @@
     <string name="hello_world">Hello Android!</string>
 	<string name="get_url">GO</string>
     <string name="action_search">Search</string>
+    <string name="app_id">306062796201990</string>
 </resources>
