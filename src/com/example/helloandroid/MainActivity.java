@@ -1,29 +1,15 @@
 package com.example.helloandroid;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity {
@@ -34,7 +20,7 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] values = new String[] { "1. ActionBar", "2. Facebook Login" };
+        String[] values = new String[] { "1. Http Connection", "2. Facebook Login" };
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, values);
             setListAdapter(adapter);
@@ -45,11 +31,11 @@ public class MainActivity extends ListActivity {
     @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
     	Log.d(DEBUG_TAG, "touch menu = " + position);
-		String item = (String)getListAdapter().getItem(position);
+		//String item = (String)getListAdapter().getItem(position);
 		Intent intent = null;
 		switch (position) {
-		case 0: // 1. ActionBar Activity
-			intent = new Intent(this, ActionBarDemo.class);
+		case 0: // 1. HttpConn Activity
+			intent = new Intent(this, HttpConnDemo.class);
 			startActivity(intent);
 			break;
 		case 1: // 2. Facebook Login Activity

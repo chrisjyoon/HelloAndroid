@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-        	android:name="com.example.helloandroid.ActionBarDemo"
+        	android:name="com.example.helloandroid.HttpConnDemo"
         	android:parentActivityName="com.example.helloandroid.MainActivity">
         </activity>
         <activity

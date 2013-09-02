@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class ActionBarDemo extends ActionBarActivity {
+public class HttpConnDemo extends ActionBarActivity {
 	EditText editText = null;
 	TextView textView = null;
 	

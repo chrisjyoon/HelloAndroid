@@ -1,32 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewFBName"
-        android:layout_centerHorizontal="true"
-        android:text="Facebook userInfo"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-    <TextView
-        android:id="@+id/textViewFBName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Facebook name" />
+    <fragment android:name="com.example.helloandroid.FacebookSplash"
+          android:id="@+id/splashFragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+    </fragment>
+    <fragment android:name="com.example.helloandroid.FacebookLogin"
+          android:id="@+id/selectionFragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+    </fragment>
+    <fragment android:name="com.facebook.widget.UserSettingsFragment"
+          android:id="@+id/settingFragment"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
+    </fragment>
 
-    <TextView
-        android:id="@+id/textViewFBUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textViewFBName"
-        android:layout_below="@+id/textViewFBName"
-        android:text="Facebook userName" />
-    
-
-</RelativeLayout>
+</LinearLayout>
