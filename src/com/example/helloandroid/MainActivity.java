@@ -20,10 +20,15 @@ public class MainActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] values = new String[] { "1. Http Connection", "2. Facebook Login", "3. Location Track" };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, values);
-            setListAdapter(adapter);
+        String[] values = new String[] { 
+        		"1. Http Connection", 
+        		"2. Facebook Login", 
+        		"3. Location Track",
+        		"4. Map"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+        	android.R.layout.simple_list_item_1, values);
+        setListAdapter(adapter);
     }
 
     
@@ -46,7 +51,10 @@ public class MainActivity extends ListActivity {
 			intent = new Intent(this, LocationTrackDemo.class);
 			startActivity(intent);
 			break;
-				
+		case 3: // 4. Map Activity
+			intent = new Intent(this, MapDemo.class);
+			startActivity(intent);
+			break;		
 		}
 		super.onListItemClick(l, v, position, id);
 	}

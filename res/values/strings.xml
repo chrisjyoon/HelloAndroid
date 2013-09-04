@@ -7,6 +7,7 @@
 	<string name="get_url">GO</string>
     <string name="action_search">Search</string>
     <string name="app_id">306062796201990</string>
+    <string name="google_map_apikey">AIzaSyDEBmHHY1mqvI5l5skX7OxYJe3nE5DqRP8</string>
     <string name="btn_getloc">Get Location</string>
     <string name="btn_getaddr">Get Address</string>
     <string name="start_updates">Start Updates</string>
