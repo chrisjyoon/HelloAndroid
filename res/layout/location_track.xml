@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textLatLon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/latlon"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/textAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textLatLon"
+        android:layout_alignParentLeft="true"
+        android:text="@string/address"
+        android:textSize="20sp" />
+    <TextView
+        android:id="@+id/textState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textAddr"
+        android:layout_alignParentLeft="true"
+        android:textSize="20sp" />
+    <Button
+        android:id="@+id/btnGetLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textState"
+        android:layout_centerHorizontal="true"
+        android:onClick="getLocation"
+        android:text="@string/btn_getloc" />
+    <Button
+        android:id="@+id/btnGetAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnGetLocation"
+        android:layout_centerHorizontal="true"
+        android:onClick="getAddress"
+        android:text="@string/btn_getaddr" />
+    <Button
+        android:id="@+id/btn_start_updates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnGetAddr"
+        android:layout_centerHorizontal="true"
+        android:onClick="startUpdates"
+        android:text="@string/start_updates" />
+    <Button
+        android:id="@+id/btn_stop_updates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_start_updates"
+        android:layout_centerHorizontal="true"
+        android:onClick="stopUpdates"
+        android:text="@string/stop_updates" />
+    <ProgressBar
+        android:id="@+id/address_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textLatLon"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="true"
+        android:visibility="gone" />
+    
+</RelativeLayout>

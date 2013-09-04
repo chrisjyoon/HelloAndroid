@@ -7,4 +7,21 @@
 	<string name="get_url">GO</string>
     <string name="action_search">Search</string>
     <string name="app_id">306062796201990</string>
+    <string name="btn_getloc">Get Location</string>
+    <string name="btn_getaddr">Get Address</string>
+    <string name="start_updates">Start Updates</string>
+    <string name="stop_updates">Stop Updates</string>
+    <string name="latlon">현 위치 : </string>
+    <string name="address">주 소 : </string>
+    <!-- Address format -->
+    <string name="address_output_string">%1$s %2$s %3$s</string>
+    <string name="IO_Exception_getFromLocation">IO Exception in Geocoder.getFromLocation()</string>
+    <string name="illegal_argument_exception">
+        Illegal arguments: Latitude %1$.8f Longitude %2$.8f
+    </string>
+    <string name="no_address_found">No address found for location</string>
+    <string name="no_geocoder_available">Cannot get address. No geocoder available.</string>
+    <string name="location_requested">Location updates requested.</string>
+    <string name="location_updated">Location updated.</string>
+    <string name="location_updates_stopped">Location updates stopped.</string>
 </resources>
