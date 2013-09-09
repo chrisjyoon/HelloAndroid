@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +27,10 @@ public class LocationActivity extends Activity implements
 	private LocationClient mLocationClient;
 	private LocationRequest mLocationRequest;
 	private boolean mUpdatesRequested = false;
-	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
+	private SharedPreferences mPrefs;
+	private SharedPreferences.Editor mEditor;
+	
+	private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private static final long UPDATE_INTERVAL = 5000;
 	private static final long FASTEST_INTERVAL = 1000;
 	
@@ -41,26 +46,30 @@ public class LocationActivity extends Activity implements
 		mLocationRequest.setInterval(UPDATE_INTERVAL);
 		mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
 	
-/*		mPrefs = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
+		mPrefs = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE);
         // Get a SharedPreferences editor
         mEditor = mPrefs.edit();
-*/        
+
         mLocationClient = new LocationClient(this, this, this);
-        mUpdatesRequested = true;//false;
+        mUpdatesRequested = false;
+        
+        Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onCreate");
 	}
 	
 	@Override
 	protected void onPause() {
-/*		mEditor.putBoolean("KEY_UPDATES_ON", mUpdatesRequested);
+		mEditor.putBoolean("KEY_UPDATES_ON", mUpdatesRequested);
 		mEditor.commit();
-*/		super.onPause();
+		super.onPause();
+		
+		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onPause");
 	}
 
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-/*		if (mPrefs.contains("KEY_UPDATES_ON")) {
+		if (mPrefs.contains("KEY_UPDATES_ON")) {
             mUpdatesRequested =
                     mPrefs.getBoolean("KEY_UPDATES_ON", false);
 
@@ -69,12 +78,17 @@ public class LocationActivity extends Activity implements
             mEditor.putBoolean("KEY_UPDATES_ON", false);
             mEditor.commit();
         }
-*/	}
+		
+		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onResume");
+	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		mLocationClient.connect();
+		if (!mLocationClient.isConnected()) 
+			mLocationClient.connect();
+		
+		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onStart");
 	}
 
 
@@ -82,6 +96,25 @@ public class LocationActivity extends Activity implements
 	@Override
 	protected void onStop() {
 		// If the client is connected
+        /*if (mLocationClient.isConnected()) {
+            
+             * Remove location updates for a listener.
+             * The current Activity is the listener, so
+             * the argument is "this".
+             
+        	stopPeriodicUpdates();
+        }
+		mLocationClient.disconnect();*/
+		super.onStop();
+		
+		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onStop");
+	}
+	
+	
+	
+    @Override
+	protected void onDestroy() {
+    	// If the client is connected
         if (mLocationClient.isConnected()) {
             /*
              * Remove location updates for a listener.
@@ -91,19 +124,19 @@ public class LocationActivity extends Activity implements
         	stopPeriodicUpdates();
         }
 		mLocationClient.disconnect();
-		super.onStop();
+		
+		super.onDestroy();
+		
+		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onDestroy");
 	}
-	
-    @Override
+
+	@Override
 	public void onLocationChanged(Location location) {
 		String msg = "Updated Location: " +
 	                Double.toString(location.getLatitude()) + "," +
 	                Double.toString(location.getLongitude());
-		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 		
-/*		textState.setText(R.string.location_updated);
-		textLatLon.setText(msg);
-		*/
 		Log.d(MainActivity.DEBUG_TAG, msg);
 	}
 
@@ -135,7 +168,6 @@ public class LocationActivity extends Activity implements
     private void startPeriodicUpdates() {
     	Toast.makeText(this, "start Location Update", Toast.LENGTH_SHORT).show();
         mLocationClient.requestLocationUpdates(mLocationRequest, this);
-        //textState.setText(R.string.location_requested);
     }
 
     /**
@@ -145,7 +177,6 @@ public class LocationActivity extends Activity implements
     private void stopPeriodicUpdates() {
     	Toast.makeText(this, "stop Location Update", Toast.LENGTH_SHORT).show();
         mLocationClient.removeLocationUpdates(this);
-        //textState.setText(R.string.location_updates_stopped);
     }
     
     public Location getLocation() {
@@ -154,11 +185,24 @@ public class LocationActivity extends Activity implements
         if (servicesConnected()) {
             // Get the current location
             currentLocation = mLocationClient.getLastLocation();
-            String msg = "Current Location: " +
-	                Double.toString(currentLocation.getLatitude()) + "," +
-	                Double.toString(currentLocation.getLongitude());
         }
         return currentLocation;
+    }
+    
+    public void startUpdates() {
+    	mUpdatesRequested = true;
+    	
+    	if (servicesConnected()) {
+    		startPeriodicUpdates();
+        }
+    }
+    
+    public void stopUpdates() {
+        mUpdatesRequested = false;
+
+        if (servicesConnected()) {
+            stopPeriodicUpdates();
+        }
     }
 
 	 private boolean servicesConnected() {
