@@ -27,4 +27,5 @@
     <string name="location_updates_stopped">Location updates stopped.</string>
     <string name="chrono_format">Initial format:<xliff:g id="initial-format">%</xliff:g></string>
     <string name="start_timer">00:00:00</string>
+    <string name="askSetGPS">GPS가 꺼져있습니다. 트랙킹을 위하여 확인 버튼을 누르시면 GPS 사용 설정 페이지로 이동합니다.</string>
 </resources>

@@ -1,8 +1,15 @@
 package com.example.helloandroid;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -14,6 +21,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
@@ -33,7 +41,9 @@ public class MapDemo extends LocationActivity {
 	private String hours,minutes,seconds; 
 	private long secs,mins,hrs;
 	private boolean stopped = false;
+	private boolean firstUpdate = true;
 	private Location mLastLocation = null;
+	private ArrayList<LatLng> trackPoint = null;
 	
 	private static final int lineColor = Color.argb(75, 0, 170, 180);
 	private static final float lineWidth = 20;
@@ -53,6 +63,23 @@ public class MapDemo extends LocationActivity {
 	}
 	
 	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
+		LocationManager locationManager = 
+	            (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+		
+		if (!gpsEnabled) {
+			showDlg();
+		}
+	}
+
+
+
 	@Override
 	public void onConnected(Bundle arg0) {
 		Location mLoc = getLocation();
@@ -62,13 +89,16 @@ public class MapDemo extends LocationActivity {
 			lastPos = currPos;
 			
 			mMap.moveCamera(CameraUpdateFactory.newLatLng(currPos));
-			
+
 			mMap.addMarker(new MarkerOptions()
-	        .position(currPos)
-	        .title("Hello world"));
-			
+			.anchor((float)0.5, (float)0.5)
+        	.position(currPos)
+        	.icon(BitmapDescriptorFactory.fromResource(R.drawable.curpos_marker)));
+
 			mLastLocation = mLoc;
-			
+
+			trackPoint = new ArrayList<LatLng>();
+
 		} else {
 			Toast.makeText(this, "Can't get location!", Toast.LENGTH_SHORT).show();
 		}
@@ -80,7 +110,7 @@ public class MapDemo extends LocationActivity {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
+		
 		super.onLocationChanged(location);
 		
 		currPos = new LatLng(location.getLatitude(), location.getLongitude());
@@ -94,6 +124,7 @@ public class MapDemo extends LocationActivity {
 			Toast.makeText(this, "MOVED !", Toast.LENGTH_SHORT).show();
 			Log.d(MainActivity.DEBUG_TAG, "MOVED!!!!!!!!!!!!!");
 			
+			trackPoint.add(currPos);
 			drawLine();
 			
 			lastPos = currPos;
@@ -103,9 +134,19 @@ public class MapDemo extends LocationActivity {
 	}
 	
 	public void drawLine() {
-		rectOptions = new PolylineOptions()
-	        .add(lastPos)
-	        .add(currPos);
+		mMap.clear();
+		
+		mMap.addMarker(new MarkerOptions()
+			.anchor((float)0.5, (float)0.5)
+        	.position(currPos)
+        	.icon(BitmapDescriptorFactory.fromResource(R.drawable.curpos_marker)));
+		
+		rectOptions = new PolylineOptions();
+		
+		for (LatLng pos : trackPoint) {
+			rectOptions.add(pos);
+		}
+
 		rectOptions.color(lineColor);
 		rectOptions.width(lineWidth);
 		
@@ -208,5 +249,34 @@ public class MapDemo extends LocationActivity {
 		/* Setting the timer text to the elapsed time */ 
 		((TextView)findViewById(R.id.timer)).setText(hours + ":" + minutes + ":" + seconds); 
 		 
+	}
+	
+	public void showDlg() {
+		AlertDialog.Builder ab = new AlertDialog.Builder(this);
+		ab.setTitle("알림");
+		ab.setMessage(getString(R.string.askSetGPS));
+		
+		ab.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+	
+			@Override
+			public void onClick(DialogInterface dlg, int arg1) {
+				// TODO Auto-generated method stub
+				dlg.dismiss();
+				Intent i = new Intent();
+				i.setAction(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+				startActivity(i);
+				
+			}
+		});
+		ab.setNegativeButton("무시", new DialogInterface.OnClickListener() {
+	
+			@Override
+			public void onClick(DialogInterface dlg, int arg1) {
+				// TODO Auto-generated method stub
+				dlg.dismiss();
+			}
+		});
+		ab.show();
+		
 	}
 }
