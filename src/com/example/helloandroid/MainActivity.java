@@ -1,8 +1,8 @@
 package com.example.helloandroid;
 
-import android.os.Bundle;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +11,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import com.example.helloandroid.media.MP3Play;
 
 public class MainActivity extends ListActivity {
 	public static final String DEBUG_TAG = "HelloExample";
@@ -24,7 +26,8 @@ public class MainActivity extends ListActivity {
         		"1. Http Connection", 
         		"2. Facebook Login", 
         		"3. Location Track",
-        		"4. Map"
+        		"4. Map",
+        		"5. Mp3"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
         	android.R.layout.simple_list_item_1, values);
@@ -55,6 +58,10 @@ public class MainActivity extends ListActivity {
 			intent = new Intent(this, MapDemo.class);
 			startActivity(intent);
 			break;		
+		case 4: // 5. Play Mp3
+			intent = new Intent(this, MP3Play.class);
+			startActivity(intent);
+			break;
 		}
 		super.onListItemClick(l, v, position, id);
 	}

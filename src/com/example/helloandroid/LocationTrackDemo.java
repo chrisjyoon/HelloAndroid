@@ -422,9 +422,12 @@ public class LocationTrackDemo extends FragmentActivity	implements
                             address.getMaxAddressLineIndex() > 0 ?
                                     address.getAddressLine(0) : "",
 
+                            address.getSubLocality(),
+
                             // Locality is usually a city
                             address.getLocality(),
-
+                            
+                            
                             // The country of the address
                             address.getCountryName()
                     );

@@ -1,1 +1,4 @@
 bin/*
+gen/*
+.gitignore
+gen/com/example/helloandroid/R.java

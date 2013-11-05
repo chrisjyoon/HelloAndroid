@@ -28,4 +28,8 @@
     <string name="chrono_format">Initial format:<xliff:g id="initial-format">%</xliff:g></string>
     <string name="start_timer">00:00:00</string>
     <string name="askSetGPS">GPS가 꺼져있습니다. 트랙킹을 위하여 확인 버튼을 누르시면 GPS 사용 설정 페이지로 이동합니다.</string>
+    
+    <string name="txt_hint_input">type here what you listen</string>
+    <string name="txt_test1">I love my cat so much. He has lived with me for 17 years. But now my cat looks very old and weak. He can\'t catch mice. How long does a cat live?</string>
+    <string name="title_complete">미션 성공!</string>
 </resources>

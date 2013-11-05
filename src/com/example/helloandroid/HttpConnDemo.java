@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -14,6 +15,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +36,18 @@ public class HttpConnDemo extends ActionBarActivity {
 		editText = (EditText)findViewById(R.id.inputUri);
 		textView = (TextView)findViewById(R.id.textMessage);
 	}
+
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main, menu);
+	    
+		return super.onCreateOptionsMenu(menu);
+	}
+
+
 
 	public void myClickHandler(View view) {
     	String stringUrl = editText.getText().toString();
