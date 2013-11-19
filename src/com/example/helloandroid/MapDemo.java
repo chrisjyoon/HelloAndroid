@@ -114,15 +114,15 @@ public class MapDemo extends LocationActivity {
 		super.onLocationChanged(location);
 		
 		currPos = new LatLng(location.getLatitude(), location.getLongitude());
-		Log.d(MainActivity.DEBUG_TAG, "lastPos.latitude = " + lastPos.latitude);
-		Log.d(MainActivity.DEBUG_TAG, "lastPos.longitude = " + lastPos.longitude);
+		Log.d(Utility.DEBUG_TAG, "lastPos.latitude = " + lastPos.latitude);
+		Log.d(Utility.DEBUG_TAG, "lastPos.longitude = " + lastPos.longitude);
 		
-		Log.d(MainActivity.DEBUG_TAG, "currPos.latitude = " + currPos.latitude);
-		Log.d(MainActivity.DEBUG_TAG, "currPos.longitude = " + currPos.longitude);
+		Log.d(Utility.DEBUG_TAG, "currPos.latitude = " + currPos.latitude);
+		Log.d(Utility.DEBUG_TAG, "currPos.longitude = " + currPos.longitude);
 		
 		if (isMoved(location)) {
 			Toast.makeText(this, "MOVED !", Toast.LENGTH_SHORT).show();
-			Log.d(MainActivity.DEBUG_TAG, "MOVED!!!!!!!!!!!!!");
+			Log.d(Utility.DEBUG_TAG, "MOVED!!!!!!!!!!!!!");
 			
 			trackPoint.add(currPos);
 			drawLine();
@@ -157,7 +157,7 @@ public class MapDemo extends LocationActivity {
 	public boolean isMoved(Location location) {
 		if (mLastLocation != null) {
 			float dist = location.distanceTo(mLastLocation);
-			Log.d(MainActivity.DEBUG_TAG, "dist = " + dist);
+			Log.d(Utility.DEBUG_TAG, "dist = " + dist);
 			if (dist > 3) {
 				return true;
 			}

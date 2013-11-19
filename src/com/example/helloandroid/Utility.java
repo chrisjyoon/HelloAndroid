@@ -7,6 +7,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 public class Utility {
+	public static final String DEBUG_TAG = "HelloExample";
+	
+	static String[] mainMenu = { 
+		"1. Http Connection", 
+		"2. Facebook Login", 
+		"3. Location Track",
+		"4. Map",
+		"5. Mp3",
+		"6. Animation"
+    };
 	
 	public static class AlertDialogFragment extends DialogFragment {
 		public interface OnClick {

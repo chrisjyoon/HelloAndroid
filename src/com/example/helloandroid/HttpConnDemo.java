@@ -92,7 +92,7 @@ public class HttpConnDemo extends ActionBarActivity {
     		conn.setDoInput(true);
     		conn.connect();
     		int response = conn.getResponseCode();
-    		Log.d(MainActivity.DEBUG_TAG, "response code : " + response);
+    		Log.d(Utility.DEBUG_TAG, "response code : " + response);
     		is = conn.getInputStream();
     		
     		String contentAsString = readIt(is, len);

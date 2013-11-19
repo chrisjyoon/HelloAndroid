@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.helloandroid.MainActivity;
+import com.example.helloandroid.Utility;
 
 public class WriteWatcher implements TextWatcher {
 	private EditText mEtInput;
@@ -58,13 +58,13 @@ public class WriteWatcher implements TextWatcher {
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
-		Log.d(MainActivity.DEBUG_TAG, "mPosition = " + mPosition + ", start = " + start);
+		Log.d(Utility.DEBUG_TAG, "mPosition = " + mPosition + ", start = " + start);
 		if (start < before) return;
 		
-		Log.d(MainActivity.DEBUG_TAG, "s = " + s + ", mWords = " + mWords[mWordPos]);
-		Log.d(MainActivity.DEBUG_TAG, "start = " + start);
-		Log.d(MainActivity.DEBUG_TAG, "before = " + before);
-		Log.d(MainActivity.DEBUG_TAG, "count = " + count);
+		Log.d(Utility.DEBUG_TAG, "s = " + s + ", mWords = " + mWords[mWordPos]);
+		Log.d(Utility.DEBUG_TAG, "start = " + start);
+		Log.d(Utility.DEBUG_TAG, "before = " + before);
+		Log.d(Utility.DEBUG_TAG, "count = " + count);
 		
 		if (s.length() <= 0) return;
 		
@@ -91,11 +91,13 @@ public class WriteWatcher implements TextWatcher {
 				if (mWordPos == mWords.length) {
 					mEtInput.setEnabled(false);
 					mCallback.onSentenceComplete();
+					mText.delete(0, mText.length());
+					mTvLine.setText("");
 					init();
 				}
 			}
 		} else {
-			Log.d(MainActivity.DEBUG_TAG, "mmCorrectWord = " + mCorrectWord);
+			Log.d(Utility.DEBUG_TAG, "mmCorrectWord = " + mCorrectWord);
 			mEtInput.setText(mCorrectWord);
 			mEtInput.setSelection(mPosition);
 		}

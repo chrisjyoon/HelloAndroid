@@ -32,4 +32,13 @@
     <string name="txt_hint_input">type here what you listen</string>
     <string name="txt_test1">I love my cat so much. He has lived with me for 17 years. But now my cat looks very old and weak. He can\'t catch mice. How long does a cat live?</string>
     <string name="title_complete">미션 성공!</string>
+    
+    <string name="exercise_front">Exercise</string>
+    <string name="exercise_back">Last Access : 1 day ago</string>
+    <string name="exercise_back_explain">Score : 250</string>
+    
+    <string name="daily_front">Daily Update</string>
+    <string name="daily_back">Last Access : 2 days ago</string>
+    <string name="daily_back_explain">Score : 220</string>
+    
 </resources>

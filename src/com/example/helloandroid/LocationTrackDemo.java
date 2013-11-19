@@ -183,7 +183,7 @@ public class LocationTrackDemo extends FragmentActivity	implements
 		textState.setText(R.string.location_updated);
 		textLatLon.setText(msg);
 		
-		Log.d(MainActivity.DEBUG_TAG, msg);
+		Log.d(Utility.DEBUG_TAG, msg);
 	}
 
 
@@ -228,7 +228,7 @@ public class LocationTrackDemo extends FragmentActivity	implements
         // If Google Play services is available
         if (ConnectionResult.SUCCESS == resultCode) {
             // In debug mode, log the status
-            Log.d(MainActivity.DEBUG_TAG, "Google Play services is available.");
+            Log.d(Utility.DEBUG_TAG, "Google Play services is available.");
             // Continue
             return true;
         // Google Play services was not available for some reason
@@ -385,7 +385,7 @@ public class LocationTrackDemo extends FragmentActivity	implements
                 } catch (IOException exception1) {
 
                     // Log an error and return an error message
-                    Log.e(MainActivity.DEBUG_TAG, getString(R.string.IO_Exception_getFromLocation));
+                    Log.e(Utility.DEBUG_TAG, getString(R.string.IO_Exception_getFromLocation));
 
                     // print the stack trace
                     exception1.printStackTrace();
@@ -403,7 +403,7 @@ public class LocationTrackDemo extends FragmentActivity	implements
                             location.getLongitude()
                     );
                     // Log the error and print the stack trace
-                    Log.e(MainActivity.DEBUG_TAG, errorString);
+                    Log.e(Utility.DEBUG_TAG, errorString);
                     exception2.printStackTrace();
 
                     //

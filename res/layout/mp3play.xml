@@ -34,7 +34,14 @@
 	    android:layout_toRightOf="@+id/btn_stop"
 	    android:onClick="toggleRepeat"
 	    android:text="자동 반복 OFF" />
-	
+	<Button
+	    android:id="@+id/btn_write"
+		android:layout_width="wrap_content"	    
+	    android:layout_height="100dp"
+	    android:layout_above="@+id/txt_start_time"
+	    android:text="start write"
+	    android:onClick="write"
+	 />
 	
 	<TextView
 	    android:id="@+id/txt_start_time"

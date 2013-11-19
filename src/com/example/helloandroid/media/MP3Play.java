@@ -19,11 +19,12 @@ import android.widget.TextView;
 
 import com.example.helloandroid.MainActivity;
 import com.example.helloandroid.R;
+import com.example.helloandroid.Utility;
 import com.example.helloandroid.Utility.AlertDialogFragment;
 
 public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 	MediaPlayer mPlayer;
-	boolean mIsPrepared = true;
+	boolean mIsPrepared = false;
 	boolean mIsRepeat = false;
 	Button mBtnPlay;
 	Button mBtnPause;
@@ -60,9 +61,14 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 		mPlayer.setOnCompletionListener(new OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer player) {
+				Log.d(Utility.DEBUG_TAG, "onComplete");
+				
 				setInit();
+				
 				if (mIsRepeat) {
-					playMp3(mBtnPlay);
+					Log.d(Utility.DEBUG_TAG, "Pause");
+					
+					(new Pause()).execute(1000);	
 				} else {
 					mBtnStop.setClickable(false);
 					mBtnPlay.setVisibility(View.VISIBLE);
@@ -136,7 +142,7 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 		AlertDialogFragment adf = AlertDialogFragment.newInstance(R.string.title_complete, msg);
 		adf.show(getFragmentManager(), null);
 		
-		
+		((Button)findViewById(R.id.btn_write)).setClickable(true);
 	}
 
 	public void setInit() {
@@ -145,25 +151,32 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 	}
 
 	public void playMp3(View v) {
-		if (!mIsPrepared) return;
-		
-		mPlayer.start();
-		mSeekUpdate = new SeekUpdate(); 
-		mSeekUpdate.execute();
-		
 		v.setVisibility(View.GONE);
 		mBtnPause.setVisibility(View.VISIBLE);
 		mBtnStop.setClickable(true);
-		mEtInput.setEnabled(true);
-		mStartTime = System.currentTimeMillis();
+		
+		play();
 	}
+	
+	public void play() {
+		if (!mIsPrepared) return;
+		mPlayer.start();
+		mSeekUpdate = new SeekUpdate(); 
+		mSeekUpdate.execute();
+	}
+	
+	
 	
 	public void toggleRepeat(View v) {
 		mIsRepeat = !mIsRepeat;
-		if (mIsRepeat)
+		if (mIsRepeat) {
 			((TextView)v).setText("자동반복 ON");
-		else
+			mPlayer.setLooping(true);
+		}
+		else {
 			((TextView)v).setText("자동반복 OFF");
+			mPlayer.setLooping(false);
+		}
 	}
 	
 	public void pauseMp3(View v) {
@@ -185,6 +198,12 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 		setInit();
 	}
 	
+	public void write(View v) {
+		mStartTime = System.currentTimeMillis();
+		mEtInput.setEnabled(true);
+		v.setClickable(false);
+	}
+	
 	public String getTimeStamp(int millisec) {
 		int sec = millisec / 1000;
 		int min = sec / 60;
@@ -195,6 +214,8 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 	private class SeekUpdate extends AsyncTask<Void, Integer, Void> {
 		@Override
 		protected Void doInBackground(Void... arg0) {
+			Log.d(Utility.DEBUG_TAG, "Seek Update Start ! ");
+			
 			while (mPlayer != null && mPlayer.isPlaying()) {
 				publishProgress(mPlayer.getCurrentPosition());
 				try {
@@ -215,7 +236,26 @@ public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			Log.d(MainActivity.DEBUG_TAG, "stopped.");
+			Log.d(Utility.DEBUG_TAG, "stopped.");
+			super.onPostExecute(result);
+		}
+	}
+	
+	private class Pause extends AsyncTask<Integer, Void, Void> {
+		@Override
+		protected Void doInBackground(Integer... args) {
+			mPlayer.pause();
+			try {
+				Thread.sleep(args[0]);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}	
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			mPlayer.start();
 			super.onPostExecute(result);
 		}
 		

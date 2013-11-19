@@ -12,25 +12,18 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.helloandroid.animation.CardFlipActivity;
 import com.example.helloandroid.media.MP3Play;
 
 public class MainActivity extends ListActivity {
-	public static final String DEBUG_TAG = "HelloExample";
-
 	SimpleAdapter mAdapter;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String[] values = new String[] { 
-        		"1. Http Connection", 
-        		"2. Facebook Login", 
-        		"3. Location Track",
-        		"4. Map",
-        		"5. Mp3"
-        };
+        
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-        	android.R.layout.simple_list_item_1, values);
+        	android.R.layout.simple_list_item_1, Utility.mainMenu);
         setListAdapter(adapter);
     }
 
@@ -38,7 +31,7 @@ public class MainActivity extends ListActivity {
     
     @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-    	Log.d(DEBUG_TAG, "touch menu = " + position);
+    	Log.d(Utility.DEBUG_TAG, "touch menu = " + position);
 		//String item = (String)getListAdapter().getItem(position);
 		Intent intent = null;
 		switch (position) {
@@ -60,6 +53,10 @@ public class MainActivity extends ListActivity {
 			break;		
 		case 4: // 5. Play Mp3
 			intent = new Intent(this, MP3Play.class);
+			startActivity(intent);
+			break;
+		case 5: // 6. Animation
+			intent = new Intent(this, CardFlipActivity.class);
 			startActivity(intent);
 			break;
 		}

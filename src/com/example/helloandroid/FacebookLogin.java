@@ -62,9 +62,9 @@ public class FacebookLogin extends Fragment {
 			@Override
 			public void onCompleted(GraphUser user, Response response) {
 				if (user != null) {
-					Log.d(MainActivity.DEBUG_TAG, "name = " + user.getName());
-					Log.d(MainActivity.DEBUG_TAG, "userName = " + user.getUsername());
-					Log.d(MainActivity.DEBUG_TAG, "userId = " + user.getId());
+					Log.d(Utility.DEBUG_TAG, "name = " + user.getName());
+					Log.d(Utility.DEBUG_TAG, "userName = " + user.getUsername());
+					Log.d(Utility.DEBUG_TAG, "userId = " + user.getId());
 					
 					profilePictureView.setProfileId(user.getId());
 					tvName.setText(user.getName());

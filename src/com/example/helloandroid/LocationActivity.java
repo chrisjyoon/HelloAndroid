@@ -53,7 +53,7 @@ public class LocationActivity extends Activity implements
         mLocationClient = new LocationClient(this, this, this);
         mUpdatesRequested = false;
         
-        Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onCreate");
+        Log.d(Utility.DEBUG_TAG, "LocationActivity::onCreate");
 	}
 	
 	@Override
@@ -62,7 +62,7 @@ public class LocationActivity extends Activity implements
 		mEditor.commit();
 		super.onPause();
 		
-		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onPause");
+		Log.d(Utility.DEBUG_TAG, "LocationActivity::onPause");
 	}
 
 
@@ -79,7 +79,7 @@ public class LocationActivity extends Activity implements
             mEditor.commit();
         }
 		
-		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onResume");
+		Log.d(Utility.DEBUG_TAG, "LocationActivity::onResume");
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class LocationActivity extends Activity implements
 		if (!mLocationClient.isConnected()) 
 			mLocationClient.connect();
 		
-		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onStart");
+		Log.d(Utility.DEBUG_TAG, "LocationActivity::onStart");
 	}
 
 
@@ -107,7 +107,7 @@ public class LocationActivity extends Activity implements
 		mLocationClient.disconnect();*/
 		super.onStop();
 		
-		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onStop");
+		Log.d(Utility.DEBUG_TAG, "LocationActivity::onStop");
 	}
 	
 	
@@ -127,7 +127,7 @@ public class LocationActivity extends Activity implements
 		
 		super.onDestroy();
 		
-		Log.d(MainActivity.DEBUG_TAG, "LocationActivity::onDestroy");
+		Log.d(Utility.DEBUG_TAG, "LocationActivity::onDestroy");
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class LocationActivity extends Activity implements
 	                Double.toString(location.getLongitude());
 //		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 		
-		Log.d(MainActivity.DEBUG_TAG, msg);
+		Log.d(Utility.DEBUG_TAG, msg);
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class LocationActivity extends Activity implements
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
 		    // In debug mode, log the status
-		    Log.d(MainActivity.DEBUG_TAG, "Google Play services is available.");
+		    Log.d(Utility.DEBUG_TAG, "Google Play services is available.");
 		    // Continue
 		    return true;
 		// Google Play services was not available for some reason
