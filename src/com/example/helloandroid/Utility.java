@@ -15,7 +15,8 @@ public class Utility {
 		"3. Location Track",
 		"4. Map",
 		"5. Mp3",
-		"6. Animation"
+		"6. Animation",
+		"7. ViewPager"
     };
 	
 	public static class AlertDialogFragment extends DialogFragment {

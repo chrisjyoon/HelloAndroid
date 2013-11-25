@@ -62,7 +62,9 @@
             android:name="com.facebook.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
         </activity>
-        
+        <activity 
+            android:name=".animation.ViewPagerActivity"
+             />
         
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="@string/google_map_apikey"/>

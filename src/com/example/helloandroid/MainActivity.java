@@ -13,6 +13,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.helloandroid.animation.CardFlipActivity;
+import com.example.helloandroid.animation.ViewPagerActivity;
 import com.example.helloandroid.media.MP3Play;
 
 public class MainActivity extends ListActivity {
@@ -57,6 +58,10 @@ public class MainActivity extends ListActivity {
 			break;
 		case 5: // 6. Animation
 			intent = new Intent(this, CardFlipActivity.class);
+			startActivity(intent);
+			break;
+		case 6: // 7. ViewPager
+			intent = new Intent(this, ViewPagerActivity.class);
 			startActivity(intent);
 			break;
 		}
