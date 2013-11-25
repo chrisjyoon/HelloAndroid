@@ -41,7 +41,7 @@
     <string name="daily_back">Last Access : 2 days ago</string>
     <string name="daily_back_explain">Score : 220</string>
     
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Sect 1</string>
+    <string name="title_section2">Sect 2</string>
+    <string name="title_section3">Sect 3</string>
 </resources>

@@ -11,15 +11,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.helloandroid.R;
+import com.example.helloandroid.Utility;
 
 public class ViewPagerActivity extends FragmentActivity implements ActionBar.TabListener {
-	private static int MAX_SECTION = 4;
+	private static int MAX_SECTION = 5;
+	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	/**
 	 * The {@link ViewPager} that will host the section contents.
@@ -35,6 +39,7 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		
+		
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -47,17 +52,31 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
+				Log.d(Utility.DEBUG_TAG, "onPageSelected position = " + position);
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
 		
-		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-			actionBar.addTab(actionBar.newTab()
-					.setText(mSectionsPagerAdapter.getPageTitle(i))
-					.setTabListener(this));
+		for (int i = 0; i < MAX_SECTION; i++) {
+			addTab(actionBar, i);
 		}
 	}
 	
+	public void addTab(ActionBar actionBar, int position) {
+		Tab tab = actionBar.newTab()
+				.setCustomView(R.layout.tab)
+				.setTabListener(this);
+		TextView tv = (TextView)(tab.getCustomView().findViewById(R.id.tab_title));
+		tv.setText(mSectionsPagerAdapter.getPageTitle(position));
+		actionBar.addTab(tab);
+		
+		DisplayMetrics displaymetrics = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+		int screenWidth = displaymetrics.widthPixels;
+		View tabContainerView = (View)(tab.getCustomView().getParent());
+		int tabPadding = tabContainerView.getPaddingLeft() + tabContainerView.getPaddingRight();
+		tv.setWidth(screenWidth / (MAX_SECTION-1) - tabPadding);
+	}
 	
 	@Override
 	public void onTabReselected(Tab tab, FragmentTransaction ft) {
@@ -67,6 +86,7 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		Log.d(Utility.DEBUG_TAG, "onTabSelected position = " + tab.getPosition());
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
@@ -101,8 +121,7 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
-			return 5;
+			return MAX_SECTION;
 		}
 
 		@Override
