@@ -5,14 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.example.helloandroid.animation.CardFlipActivity;
+import com.example.helloandroid.animation.SlidingTabViewPagerActivity;
 import com.example.helloandroid.animation.ViewPagerActivity;
 import com.example.helloandroid.media.MP3Play;
 
@@ -64,6 +63,10 @@ public class MainActivity extends ListActivity {
 			intent = new Intent(this, ViewPagerActivity.class);
 			startActivity(intent);
 			break;
+		case 7: // 8. SlidingTabViewPager
+			intent = new Intent(this, SlidingTabViewPagerActivity.class);
+			startActivity(intent);
+			break;
 		}
 		super.onListItemClick(l, v, position, id);
 	}
@@ -79,17 +82,5 @@ public class MainActivity extends ListActivity {
         return super.onCreateOptionsMenu(menu);
     }
     
-    @Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.action_search:
-			Toast.makeText(this, "Do nothing...", Toast.LENGTH_SHORT).show();
-			break;
-		default:
-				return super.onOptionsItemSelected(item);
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	
 }

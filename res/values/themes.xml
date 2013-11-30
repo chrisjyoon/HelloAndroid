@@ -1,21 +1,3 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <style name="CustomActionBarTheme"
-        parent="@style/Theme.AppCompat.Light">
-        <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
-        
-        <!-- Support library compatibility -->
-        <item name="windowActionBarOverlay">true</item>
-        <item name="actionBarTabStyle">@style/MyActionBarTabs</item>
-    </style>
-    
-    <!-- ActionBar styles -->
-    <style name="MyActionBarTabs"
-           parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
-        <item name="android:background">@drawable/actionbar_background</item>
-        <item name="android:width">50dp</item>
-
-        <!-- Support library compatibility -->
-        <item name="background">@drawable/actionbar_background</item>
-    </style>
 </resources>

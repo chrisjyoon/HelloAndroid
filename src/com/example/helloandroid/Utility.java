@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 
 public class Utility {
 	public static final String DEBUG_TAG = "HelloExample";
@@ -16,8 +17,13 @@ public class Utility {
 		"4. Map",
 		"5. Mp3",
 		"6. Animation",
-		"7. ViewPager"
+		"7. ViewPager",
+		"8. SlidingTabViewPager"
     };
+	
+	public static void logd(String logStr) {
+		Log.d(DEBUG_TAG, logStr);
+	}
 	
 	public static class AlertDialogFragment extends DialogFragment {
 		public interface OnClick {

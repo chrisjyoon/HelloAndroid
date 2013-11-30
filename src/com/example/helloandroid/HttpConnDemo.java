@@ -8,12 +8,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class HttpConnDemo extends ActionBarActivity {
+public class HttpConnDemo extends Activity {
 	EditText editText = null;
 	TextView textView = null;
 	

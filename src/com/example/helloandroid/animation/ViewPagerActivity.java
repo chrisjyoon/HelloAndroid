@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.example.helloandroid.Utility;
 
 public class ViewPagerActivity extends FragmentActivity implements ActionBar.TabListener {
 	private static int MAX_SECTION = 5;
+	private boolean mIsSwiped = false;
 	
 	SectionsPagerAdapter mSectionsPagerAdapter;
 	/**
@@ -47,12 +49,21 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		PagerAdapter wrappedAdapter = new InfinitePagerAdapter(mSectionsPagerAdapter);
+		
+		mViewPager.setAdapter(wrappedAdapter);
 
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
+				Log.d(Utility.DEBUG_TAG, "onPageSelected mIsSwiped = " + mIsSwiped); 
 				Log.d(Utility.DEBUG_TAG, "onPageSelected position = " + position);
+				mIsSwiped = true;
+
+				position = position % MAX_SECTION;
+				Log.d(Utility.DEBUG_TAG, "onPageSelected position = " + position);
+				
 				actionBar.setSelectedNavigationItem(position);
 			}
 		});
@@ -86,37 +97,43 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 
 	@Override
 	public void onTabSelected(Tab tab, FragmentTransaction ft) {
-		Log.d(Utility.DEBUG_TAG, "onTabSelected position = " + tab.getPosition());
-		mViewPager.setCurrentItem(tab.getPosition());
+		if (!mIsSwiped) {
+			Log.d(Utility.DEBUG_TAG, "tab.getPosition() = " + tab.getPosition());
+			Log.d(Utility.DEBUG_TAG, "mIsSwiped = " + mIsSwiped);
+			
+			mViewPager.setCurrentItem(tab.getPosition());
+		}
+			
+		mIsSwiped = false;
 	}
 
 	@Override
 	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
 		// TODO Auto-generated method stub
-		
 	}
-
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
 	 */
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
+		Fragment[] fragments = new Fragment[MAX_SECTION];
 		public SectionsPagerAdapter(FragmentManager fm) {
 			super(fm);
 		}
 
 		@Override
 		public Fragment getItem(int position) {
+			Utility.logd("SectionsPagerAdapter : getItem");
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			//Fragment fragment = new DummySectionFragment();
+			fragments[position] = new DummySectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position);
+			fragments[position].setArguments(args);
+			return fragments[position];
 		}
 
 		@Override
@@ -147,7 +164,9 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
 	 */
-	public static class DummySectionFragment extends Fragment {
+	public static final class DummySectionFragment extends Fragment {
+		private View mView = null;
+		private int mId = 0;
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
@@ -156,17 +175,30 @@ public class ViewPagerActivity extends FragmentActivity implements ActionBar.Tab
 
 		public DummySectionFragment() {
 		}
+		
+
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			// TODO Auto-generated method stub
+			super.onCreate(savedInstanceState);
+			mId = getArguments().getInt(ARG_SECTION_NUMBER);
+			
+		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main_dummy,
-					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
-			return rootView;
+			//if (mView == null) {
+				mView = inflater.inflate(R.layout.fragment_main_dummy,
+						container, false);
+				TextView dummyTextView = (TextView) mView.findViewById(R.id.section_label);
+				//dummyTextView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+				dummyTextView.setText("YES ID : " + mId);
+				Utility.logd("mView = " + mView);
+				Utility.logd("mId = " + mId);
+			//}
+			
+			return mView;
 		}
 	}
 }
