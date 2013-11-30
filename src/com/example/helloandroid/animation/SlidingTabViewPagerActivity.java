@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.helloandroid.R;
@@ -31,18 +30,14 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 		
 		adapter = new MyPagerAdapter(getSupportFragmentManager());
 		
-		//PagerAdapter wrappedAdapter = new InfinitePagerAdapter(adapter);
-		
-		//pager.setAdapter(wrappedAdapter);
 		pager.setAdapter(adapter);
 
 		final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources()
 				.getDisplayMetrics());
 		pager.setPageMargin(pageMargin);
-		pager.setCurrentItem(MAX_TAB);
 		
-		//tabs.setViewPager(pager);
-		pager.setOnPageChangeListener(new OnPageChangeListener() {
+		tabs.setViewPager(pager);
+		tabs.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
@@ -58,6 +53,7 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 
 			@Override
 			public void onPageSelected(int position) {
+				position %= MAX_TAB;
 				Utility.logd("OnCreate.onPageSelected : " + position);
 				if (position < MAX_TAB) {
 					pager.setCurrentItem(position + MAX_TAB, false);
@@ -69,6 +65,8 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 			}
 			
 		});
+		
+		pager.setCurrentItem(MAX_TAB);
 	}
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
@@ -81,7 +79,7 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 
 		@Override
 		public CharSequence getPageTitle(int position) {
-			return TITLES[position];
+			return TITLES[position % MAX_TAB];
 		}
 
 		@Override
@@ -92,24 +90,18 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			Utility.logd("getItem : position = " + position);
-			return CardFragment.newInstance(position);
+			return CardFragment.newInstance(position % MAX_TAB);
 		}
 		
 		@Override
 		public void destroyItem(ViewGroup pager, int position, Object view) {
-			//super.destroyItem(pager, position, view);
-			//((ViewPager)pager).removeView((View)view);
-			
-			Utility.logd("destroyItem : position = " + position);
+			super.destroyItem(pager, position, view);
 		}
 
 		@Override
-		public Object instantiateItem(ViewGroup container, int position) {
-			Utility.logd("instantiateItem : position = " + position);
-			position %= TITLES.length;
+		public Object instantiateItem(ViewGroup container, int position) {			
 			return super.instantiateItem(container, position);
 		}
-
 		
 	}
 }

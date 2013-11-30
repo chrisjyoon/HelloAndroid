@@ -195,7 +195,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		tabsContainer.removeAllViews();
 
-		tabCount = MAX_TAB;//pager.getAdapter().getCount();
+		tabCount = pager.getAdapter().getCount() / 3;
 
 		for (int i = 0; i < tabCount; i++) {
 
@@ -328,7 +328,8 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		}
 	}
 
-	private void scrollToChild(int position, int offset) {
+	public void scrollToChild(int position, int offset) {
+		position %= MAX_TAB;
 		if (tabCount == 0) {
 			return;
 		}
@@ -395,13 +396,19 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 			canvas.drawLine(tab.getRight(), dividerPadding, tab.getRight(), height - dividerPadding, dividerPaint);
 		}
 	}
+	
+	public void setPosition(int position, float positionOffset, int positionOffsetPixels) {
+		currentPosition = position;
+		currentPositionOffset = positionOffset;
+	}
 
 	private class PageListener implements OnPageChangeListener {
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 			Utility.logd("onPageScrolled : position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
-			position = position % MAX_TAB;
+			position %= MAX_TAB;
+			Utility.logd("onPageScrolled : position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
 			currentPosition = position;
 			currentPositionOffset = positionOffset;
 
@@ -417,7 +424,7 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		@Override
 		public void onPageScrollStateChanged(int state) {
 			if (state == ViewPager.SCROLL_STATE_IDLE) {
-				scrollToChild(pager.getCurrentItem() % MAX_TAB, 0);
+				scrollToChild(pager.getCurrentItem(), 0);
 			}
 
 			if (delegatePageListener != null) {
@@ -427,7 +434,6 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 
 		@Override
 		public void onPageSelected(int position) {
-			Utility.logd("PagerSlidingTabStrib.onPageSelected : " + position);
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageSelected(position);
 			}
