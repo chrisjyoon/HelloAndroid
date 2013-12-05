@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.example.helloandroid.MainActivity;
 import com.example.helloandroid.R;
-import com.example.helloandroid.Utility;
-import com.example.helloandroid.Utility.AlertDialogFragment;
+import com.example.helloandroid.common.Utility;
+import com.example.helloandroid.common.Utility.AlertDialogFragment;
 
 public class MP3Play extends Activity implements WriteWatcher.OnComplete {
 	MediaPlayer mPlayer;

@@ -8,6 +8,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.example.helloandroid.common.Utility;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;

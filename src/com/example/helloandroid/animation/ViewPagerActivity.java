@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.helloandroid.R;
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 public class ViewPagerActivity extends FragmentActivity implements ActionBar.TabListener {
 	private static int MAX_SECTION = 5;

@@ -13,6 +13,8 @@ import android.widget.SimpleAdapter;
 import com.example.helloandroid.animation.CardFlipActivity;
 import com.example.helloandroid.animation.SlidingTabViewPagerActivity;
 import com.example.helloandroid.animation.ViewPagerActivity;
+import com.example.helloandroid.common.ScrollSlideActivity;
+import com.example.helloandroid.common.Utility;
 import com.example.helloandroid.media.MP3Play;
 
 public class MainActivity extends ListActivity {
@@ -26,8 +28,6 @@ public class MainActivity extends ListActivity {
         	android.R.layout.simple_list_item_1, Utility.mainMenu);
         setListAdapter(adapter);
     }
-
-    
     
     @Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -67,13 +67,18 @@ public class MainActivity extends ListActivity {
 			intent = new Intent(this, SlidingTabViewPagerActivity.class);
 			startActivity(intent);
 			break;
+		case 8: // 9. Bottom Up
+			intent = new Intent(this, ScrollSlideActivity.class);
+			startActivity(intent);
+			break;
+		case 9: // 10. Popup Fragment
+			intent = new Intent(this, PopupActivity.class);
+			startActivity(intent);
+			
+			break;
 		}
 		super.onListItemClick(l, v, position, id);
 	}
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,5 +87,4 @@ public class MainActivity extends ListActivity {
         return super.onCreateOptionsMenu(menu);
     }
     
-	
 }

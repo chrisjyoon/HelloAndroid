@@ -11,7 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.example.helloandroid.R;
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 public class CardFlipActivity extends Activity {
 	private static final int MENU_EXERCISE = 0x00;

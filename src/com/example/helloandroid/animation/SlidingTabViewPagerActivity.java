@@ -11,7 +11,7 @@ import android.util.TypedValue;
 import android.view.ViewGroup;
 
 import com.example.helloandroid.R;
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 public class SlidingTabViewPagerActivity extends FragmentActivity {
 	private PagerSlidingTabStrip tabs;
@@ -37,7 +37,7 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 		pager.setPageMargin(pageMargin);
 		
 		tabs.setViewPager(pager);
-		tabs.setOnPageChangeListener(new OnPageChangeListener() {
+		/*tabs.setOnPageChangeListener(new OnPageChangeListener() {
 
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
@@ -65,8 +65,8 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 			}
 			
 		});
-		
-		pager.setCurrentItem(MAX_TAB);
+		*/
+		//pager.setCurrentItem(MAX_TAB);
 	}
 	
 	public class MyPagerAdapter extends FragmentPagerAdapter {
@@ -84,7 +84,7 @@ public class SlidingTabViewPagerActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return TITLES.length * 3;
+			return TITLES.length;// * 3;
 		}
 
 		@Override

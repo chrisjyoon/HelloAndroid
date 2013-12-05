@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 /**
  * A {@link ViewPager} that allows pseudo-infinite paging with a wrap-around

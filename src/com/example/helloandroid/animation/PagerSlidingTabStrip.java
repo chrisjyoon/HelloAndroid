@@ -43,7 +43,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.helloandroid.R;
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 public class PagerSlidingTabStrip extends HorizontalScrollView {
 	private static final int MAX_TAB = 5;
@@ -123,7 +123,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 		addView(tabsContainer);
 
 		DisplayMetrics dm = getResources().getDisplayMetrics();
-
+		
 		scrollOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, scrollOffset, dm);
 		indicatorHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, indicatorHeight, dm);
 		underlineHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, underlineHeight, dm);
@@ -195,7 +195,7 @@ public class PagerSlidingTabStrip extends HorizontalScrollView {
 Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		tabsContainer.removeAllViews();
 
-		tabCount = pager.getAdapter().getCount() / 3;
+		tabCount = pager.getAdapter().getCount();
 
 		for (int i = 0; i < tabCount; i++) {
 
@@ -242,7 +242,7 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		tab.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				pager.setCurrentItem(position);
+			//	pager.setCurrentItem(position);
 			}
 		});
 
@@ -304,6 +304,7 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+		Utility.logd("onMeasure");
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
 		if (!shouldExpand || MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.UNSPECIFIED) {
@@ -329,7 +330,7 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 	}
 
 	public void scrollToChild(int position, int offset) {
-		position %= MAX_TAB;
+		/*position %= MAX_TAB;
 		if (tabCount == 0) {
 			return;
 		}
@@ -343,7 +344,7 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		if (newScrollX != lastScrollX) {
 			lastScrollX = newScrollX;
 			scrollTo(newScrollX, 0);
-		}
+		}*/
 
 	}
 
@@ -358,10 +359,9 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 		final int height = getHeight();
 
 		// draw indicator line
-
 		rectPaint.setColor(indicatorColor);
 
-		Utility.logd("currentPosition = " + currentPosition);
+		Utility.logd("onDraw : currentPosition = " + currentPosition);
 		// default: line below current tab
 		View currentTab = tabsContainer.getChildAt(currentPosition);
 		float lineLeft = currentTab.getLeft();
@@ -381,11 +381,17 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 			lineRight = (currentPositionOffset * nextTabRight + (1f - currentPositionOffset) * lineRight);
 		}
 
-		canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
+		Utility.logd("lineLeft = " + lineLeft + ", indicatorHeight = " + indicatorHeight +  
+				", " + "lineRight = " + lineRight + ", height=" + height);
+
+		//canvas.drawRect(lineLeft, height - indicatorHeight, lineRight, height, rectPaint);
 
 		// draw underline
+		Utility.logd("height=" + height + ", underlineHeight = " + underlineHeight +  
+				", " + "tabsContainer.getWidth() = " + tabsContainer.getWidth());
 
 		rectPaint.setColor(underlineColor);
+		
 		canvas.drawRect(0, height - underlineHeight, tabsContainer.getWidth(), height, rectPaint);
 
 		// draw divider
@@ -406,16 +412,14 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 
 		@Override
 		public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-			Utility.logd("onPageScrolled : position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
-			position %= MAX_TAB;
-			Utility.logd("onPageScrolled : position = " + position + ", positionOffset = " + positionOffset + ", positionOffsetPixels = " + positionOffsetPixels);
+
 			currentPosition = position;
 			currentPositionOffset = positionOffset;
 
 			scrollToChild(position, (int) (positionOffset * tabsContainer.getChildAt(position).getWidth()));
 
 			invalidate();
-
+			
 			if (delegatePageListener != null) {
 				delegatePageListener.onPageScrolled(position, positionOffset, positionOffsetPixels);
 			}
@@ -438,7 +442,6 @@ Log.d("HelloExample", "NOTIFY!!!!!!!!!!!!!!!");
 				delegatePageListener.onPageSelected(position);
 			}
 		}
-
 	}
 
 	public void setIndicatorColor(int indicatorColor) {

@@ -8,7 +8,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.helloandroid.Utility;
+import com.example.helloandroid.common.Utility;
 
 public class WriteWatcher implements TextWatcher {
 	private EditText mEtInput;

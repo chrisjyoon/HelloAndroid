@@ -47,7 +47,6 @@ public class CardFragment extends Fragment {
 		TextView v = new TextView(getActivity());
 		params.setMargins(margin, margin, margin, margin);
 		v.setLayoutParams(params);
-		v.setLayoutParams(params);
 		v.setGravity(Gravity.CENTER);
 		v.setBackgroundResource(R.drawable.background_card);
 		v.setText("CARD " + (position + 1));

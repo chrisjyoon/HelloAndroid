@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.helloandroid.common.Utility;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
